@@ -1,0 +1,100 @@
+﻿@{
+    Validation.RequireField("width", "You must enter a width!");
+    Validation.RequireField("depth", "You must enter a depth!");
+    Validation.RequireField("material", "You must enter a surface material!");
+    Validation.RequireField("rush", "You must enter the number of rush order days!");
+    Validation.RequireField("drawers", "You must enter a number of drawers!");
+    Validation.RequireField("name", "You must enter a customer name!");
+
+    var width = "";
+    var depth = "";
+    var material = "";
+    var rush = "";
+    var drawers = "";
+    var name = "";
+
+    if (IsPost && Validation.IsValid())
+    {
+        width = Request.Form["width"];
+        depth = Request.Form["depth"];
+        material = Request.Form["material"];
+        rush = Request.Form["rush"];
+        drawers = Request.Form["drawers"];
+        name = Request.Form["name"];
+
+        //var db = Database.Open("MegaDeskQuotes");
+        //var insertCommand = "INSERT INTO Quotes (Width, depth, material, rush, drawers, name) Values(@0, @1, @2, @3, @4, @5, @6)";
+        //db.Execute(insertCommand, width, depth, material, rush, drawers, name);
+        //Response.Redirect("~/Success");
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Add Quote</title>
+    <style type="text/css">
+        .field-validation-error {
+            font-weight: bold;
+            color: red;
+            background-color: yellow;
+        }
+
+        .validation-summary-errors {
+            border: 2px dashed red;
+            color: red;
+            background-color: yellow;
+            font-weight: bold;
+            margin: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Quote</h1>
+    @Html.ValidationSummary()
+    <form method="post">
+        <a href="~/Home.cshtml">Home</a>
+        <fieldset>
+            <legend>Quote Information</legend>
+            <p>
+                <label for="width">Width:</label>
+                <input type="number" name="width" value="@Request.Form["width"]" />
+                @Html.ValidationMessage("width")
+            </p>
+
+            <p>
+                <label for="depth">Depth:</label>
+                <input type="number" name="depth" value="@Request.Form["depth"]" />
+                @Html.ValidationMessage("depth")
+            </p>
+
+            <p>
+                <label for="material">Surface Material:</label>
+                <input type="text" name="material" value="@Request.Form["material"]" />
+                @Html.ValidationMessage("material")
+            </p>
+
+            <p>
+                <label for="rush">Rush Order Days:</label>
+                <input type="number" name="rush" value="@Request.Form["rush"]" />
+                @Html.ValidationMessage("rush")
+            </p>
+
+            <p>
+                <label for="drawers">Number of Drawers:</label>
+                <input type="number" name="drawers" value="@Request.Form["drawers"]" />
+                @Html.ValidationMessage("drawers")
+            </p>
+
+            <p>
+                <label for="name">Customer Name:</label>
+                <input type="text" name="name" value="@Request.Form["name"]" />
+                @Html.ValidationMessage("name")
+            </p>
+
+            <p><input type="submit" name="buttonSubmit" value="Add Quote" /></p>
+        </fieldset>
+    </form>
+</body>
+</html>

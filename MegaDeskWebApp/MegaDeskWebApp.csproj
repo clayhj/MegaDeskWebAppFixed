@@ -85,7 +85,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Home.cshtml" />
+    <Content Include="AddQuote.cshtml" />
     <None Include="packages.config" />
+    <Content Include="Success.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
