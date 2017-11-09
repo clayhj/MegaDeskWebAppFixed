@@ -1,0 +1,44 @@
+﻿@{ 
+
+
+    var db = Database.OpenConnectionString("Data Source=|DataDirectory|\\MegaDeskQuotes.sdf", "System.Data.SqlServerCe.4.0"); ;
+    var selectCommand = "SELECT * FROM Quotes";
+
+    var selectedData = db.Query(selectCommand);
+    var grid = new WebGrid(source: selectedData, defaultSort: "QuoteDate", rowsPerPage: 5);
+
+
+
+
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>MegaDesk</title>
+</head>
+<body>
+    <h1>View Quotes</h1>
+
+    <div class="grid">
+        @grid.GetHtml(
+    tableStyle: "grid",
+    headerStyle: "head",
+    alternatingRowStyle: "alt",
+    columns: grid.Columns(
+        grid.Column("CustomerName", header: "Customer Name"),
+        grid.Column("QuoteDate", header: "Quote Date"),
+        grid.Column("Width"),
+        grid.Column("Depth"),
+        grid.Column("Material"),
+        grid.Column("Drawers"),
+        grid.Column("RushOrder", header: "Rush Order"),
+        grid.Column("Total")
+    )
+)
+    </div>
+
+</body>
+</html>
