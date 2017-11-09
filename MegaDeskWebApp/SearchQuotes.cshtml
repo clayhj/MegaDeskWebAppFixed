@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
 
 
     var db = Database.OpenConnectionString("Data Source=|DataDirectory|\\MegaDeskQuotes.sdf", "System.Data.SqlServerCe.4.0"); ;
@@ -20,7 +20,7 @@
     <title>MegaDesk</title>
 </head>
 <body>
-    <h1>View Quotes</h1>
+    <h1>Search Quotes</h1>
 
     <div class="grid">
         @grid.GetHtml(
@@ -39,10 +39,6 @@
     )
 )
     </div>
-
-    <p>
-        <a href="~/AddQuote">Add Quote</a>
-    </p>
 
 </body>
 </html>

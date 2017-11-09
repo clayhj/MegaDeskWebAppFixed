@@ -90,9 +90,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Home.cshtml" />
+    <Content Include="AddQuote.cshtml" />
     <None Include="packages.config" />
     <Content Include="ViewQuotes.cshtml" />
+    <Content Include="SearchQuotes.cshtml" />
+    <Content Include="Success.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
