@@ -1,16 +1,9 @@
 ﻿@{ 
-
-
     var db = Database.OpenConnectionString("Data Source=|DataDirectory|\\MegaDeskQuotes.sdf", "System.Data.SqlServerCe.4.0"); ;
     var selectCommand = "SELECT * FROM Quotes";
 
     var selectedData = db.Query(selectCommand);
     var grid = new WebGrid(source: selectedData, defaultSort: "QuoteDate", rowsPerPage: 5);
-
-
-
-
-
 }
 
 <!DOCTYPE html>
@@ -22,8 +15,8 @@
 <body>
     <h1>View Quotes</h1>
 
-    <div class="grid">
-        @grid.GetHtml(
+ <div class="grid">
+ @grid.GetHtml(
     tableStyle: "grid",
     headerStyle: "head",
     alternatingRowStyle: "alt",
@@ -38,7 +31,6 @@
         grid.Column("Total")
     )
 )
-    </div>
-
+</div>
 </body>
 </html>

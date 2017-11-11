@@ -22,10 +22,10 @@
         drawers = Request.Form["drawers"];
         name = Request.Form["name"];
 
-        //var db = Database.Open("MegaDeskQuotes");
-        //var insertCommand = "INSERT INTO Quotes (Width, depth, material, rush, drawers, name) Values(@0, @1, @2, @3, @4, @5, @6)";
-        //db.Execute(insertCommand, width, depth, material, rush, drawers, name);
-        //Response.Redirect("~/Success");
+        var db = Database.OpenConnectionString("MegaDeskQuotes");
+        var insertCommand = "INSERT INTO Quotes (Width, depth, material, rush, drawers, name) Values(@0, @1, @2, @3, @4, @5, @6)";
+        db.Execute(insertCommand, width, depth, material, rush, drawers, name);
+        Response.Redirect("~/Success");
     }
 }
 
