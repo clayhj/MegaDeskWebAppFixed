@@ -1,4 +1,58 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var customer = "";
+    int width = 0;
+    int depth = 0;
+    var material = "";
+    int drawers = 0;
+    int rush = 0;
+    int totalPrice = 0;
+    var quoteId = "";
+
+
+
+    if (!IsPost)
+    {
+        if (!Request.QueryString["Id"].IsEmpty() && Request.QueryString["Id"].IsInt())
+        {
+            quoteId = Request.QueryString["Id"];
+            var db = Database.OpenConnectionString("Data Source=|DataDirectory|\\MegaDeskQuotes.sdf", "System.Data.SqlServerCe.4.0");
+            var dbCommand = "SELECT * FROM Quotes WHERE Id = @0";
+            var row = db.QuerySingle(dbCommand, quoteId);
+            if (row != null)
+            {
+                customer = row.CustomerName;
+                width = row.Width;
+                depth = row.Depth;
+                material = row.Material;
+                drawers = row.Drawers;
+                rush = row.RushOrder;
+                totalPrice = row.Total;
+
+            }
+            else
+            {
+                Validation.AddFormError("No Quote was found for that ID.");
+            }
+        }
+        else
+        {
+            Validation.AddFormError("No Quote was selected.");
+        }
+    }
+
+    if (IsPost && !Request["buttonDelete"].IsEmpty())
+    {
+        quoteId = Request.Form["quoteId"];
+        var db = Database.OpenConnectionString("Data Source=|DataDirectory|\\MegaDeskQuotes.sdf", "System.Data.SqlServerCe.4.0");
+        var deleteCommand = "DELETE FROM Quotes WHERE ID = @0";
+        db.Execute(deleteCommand, quoteId);
+        Response.Redirect("~/ViewQuotes");
+    }
+}
+
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -8,7 +62,6 @@
 
     <h2>Delete Quote</h2>
     @Html.ValidationSummary()
-    <p><a href="~/ViewQuotes">Return to View Quotes</a></p>
 
     <form method="post">
         <div class="fieldsets">
@@ -16,30 +69,47 @@
                 <legend>Quote Information</legend>
 
                 <p>
-                    <span>Book:</span>
-                    <span>@book</span>
+                    <span>Customer:</span>
+                    <span>@customer</span>
                 </p>
 
                 <p>
-                    <span>Chapter:</span>
-                    <span>@chapter</span>
+                    <span>Width:</span>
+                    <span>@width</span>
                 </p>
 
                 <p>
-                    <span>Verse:</span>
-                    <span>@verse</span>
+                    <span>Depth:</span>
+                    <span>@depth</span>
                 </p>
 
                 <p>
-                    <span>Note:</span>
-                    <span>@note</span>
+                    <span>Material:</span>
+                    <span>@material</span>
                 </p>
 
-                <input type="hidden" name="scriptureid" value="@scriptureId" />
-                <p><input type="submit" name="buttonDelete" value="Delete Scripture" /></p>
+                <p>
+                    <span>Drawers:</span>
+                    <span>@drawers</span>
+                </p>
+
+                <p>
+                    <span>Rush:</span>
+                    <span>@rush</span>
+                </p>
+
+                <p>
+                    <span>Total:</span>
+                    <span>@totalPrice</span>
+                </p>
+
+                <input type="hidden" name="quoteid" value="@quoteId" />
+                <p><input type="submit" name="buttonDelete" value="Delete Quote" /></p>
             </fieldset>
         </div>
     </form>
+    <p><a href="~/ViewQuotes">Return to View Quotes</a></p>
+
 
 </body>
 </html>
