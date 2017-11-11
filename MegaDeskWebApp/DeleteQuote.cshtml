@@ -1,11 +1,15 @@
 ﻿@{
+
+    Page.Title = "Delete Scripture";
+    Layout = "~/_Layout.cshtml";
+
     var customer = "";
     int width = 0;
     int depth = 0;
     var material = "";
     int drawers = 0;
     int rush = 0;
-    int totalPrice = 0;
+    decimal totalPrice = 0;
     var quoteId = "";
 
 
@@ -52,13 +56,6 @@
 
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>MegaDesk</title>
-</head>
-<body>
 
     <h2>Delete Quote</h2>
     @Html.ValidationSummary()
@@ -99,7 +96,7 @@
                 </p>
 
                 <p>
-                    <span>Total:</span>
+                    <span>Price:</span>
                     <span>@totalPrice</span>
                 </p>
 
@@ -109,7 +106,3 @@
         </div>
     </form>
     <p><a href="~/ViewQuotes">Return to View Quotes</a></p>
-
-
-</body>
-</html>

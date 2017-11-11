@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 
         public DateTime QuoteDate { get; set; }
 
-        public int QuotePrice { get; set; }
+        public decimal QuotePrice { get; set; }
 
         public Desk Desk { get; set; }
 
@@ -46,10 +46,10 @@ using System.Threading.Tasks;
             return size;
         }
 
-        public int GetQuote()
+        public decimal GetQuote()
         {
             int drawers = Desk.Drawers;
-            int totalPrice;
+            decimal totalPrice;
             int size = DeskSize();
             string material = Desk.DeskMaterial;
             int materialPrice = 0;

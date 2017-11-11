@@ -1,5 +1,8 @@
 ﻿@{
 
+    Page.Title = "Delete Scripture";
+    Layout = "~/_Layout.cshtml";
+
     var customer = "";
     int width = 0;
     int depth = 0;
@@ -16,7 +19,7 @@
     var rosewoodCheck = "";
     var veneerCheck = "";
     var pineCheck = "";
-    int totalPrice = 0;
+    decimal totalPrice = 0;
 
 
 
@@ -129,14 +132,7 @@
 
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>MegaDesk</title>
-</head>
-<body>
-    <h1>Edit Quote</h1>
+    <h2>Edit Quote</h2>
     @Html.ValidationSummary()
     <form method="post">
         <fieldset>
@@ -201,5 +197,3 @@
         </fieldset>
     </form>
     <p><a href="~/ViewQuotes">Return to View Quotes</a></p>
-</body>
-</html>

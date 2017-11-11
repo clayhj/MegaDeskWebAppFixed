@@ -94,6 +94,7 @@
     <Content Include="EditQuote.cshtml" />
     <Content Include="DeleteQuote.cshtml" />
     <None Include="packages.config" />
+    <Content Include="Styles\Quotes.css" />
     <Content Include="ViewQuotes.cshtml" />
     <Content Include="Success.cshtml" />
     <None Include="Web.Debug.config">
@@ -102,6 +103,7 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />

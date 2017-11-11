@@ -1,4 +1,8 @@
 ﻿@{
+
+    Page.Title = "Delete Scripture";
+    Layout = "~/_Layout.cshtml";
+
     Validation.RequireField("width", "You must enter a width!");
     Validation.RequireField("depth", "You must enter a depth!");
     Validation.RequireField("material", "You must enter a surface material!");
@@ -29,32 +33,10 @@
     }
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>Add Quote</title>
-    <style type="text/css">
-        .field-validation-error {
-            font-weight: bold;
-            color: red;
-            background-color: yellow;
-        }
-
-        .validation-summary-errors {
-            border: 2px dashed red;
-            color: red;
-            background-color: yellow;
-            font-weight: bold;
-            margin: 12px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Add Quote</h1>
+    <h2>Add Quote</h2>
     @Html.ValidationSummary()
     <form method="post">
-        <a href="~/Home.cshtml">Home</a>
+        <a href="~/ViewQuotes">View Quotes</a>
         <fieldset>
             <legend>Quote Information</legend>
             <p>
@@ -96,5 +78,3 @@
             <p><input type="submit" name="buttonSubmit" value="Add Quote" /></p>
         </fieldset>
     </form>
-</body>
-</html>

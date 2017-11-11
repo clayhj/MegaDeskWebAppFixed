@@ -1,5 +1,6 @@
 ﻿@{
-
+    Page.Title = "Delete Scripture";
+    Layout = "~/_Layout.cshtml";
 
     var db = Database.OpenConnectionString("Data Source=|DataDirectory|\\MegaDeskQuotes.sdf", "System.Data.SqlServerCe.4.0");
     var selectCommand = "SELECT * FROM Quotes";
@@ -22,14 +23,7 @@
 
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>MegaDesk</title>
-</head>
-<body>
-    <h1>Quotes</h1>
+    <h2>Quotes</h2>
 
     <form method="get">
 
@@ -57,7 +51,7 @@
         grid.Column("Material", canSort: false),
         grid.Column("Drawers", canSort: false),
         grid.Column("RushOrder", header: "Rush Order", canSort: false),
-        grid.Column("Total", canSort: false),
+        grid.Column("Total", header: "Price", canSort: false),
         grid.Column(format: @<a href="~/DeleteQuote?id=@item.Id">Delete</a>)
     )
 )
@@ -66,6 +60,3 @@
     <p>
         <a href="~/AddQuote">Add Quote</a>
     </p>
-
-</body>
-</html>
