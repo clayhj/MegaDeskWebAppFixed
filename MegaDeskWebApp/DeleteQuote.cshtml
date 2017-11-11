@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>MegaDesk</title>
+</head>
+<body>
+
+    <h2>Delete Quote</h2>
+    @Html.ValidationSummary()
+    <p><a href="~/ViewQuotes">Return to View Quotes</a></p>
+
+    <form method="post">
+        <div class="fieldsets">
+            <fieldset>
+                <legend>Quote Information</legend>
+
+                <p>
+                    <span>Book:</span>
+                    <span>@book</span>
+                </p>
+
+                <p>
+                    <span>Chapter:</span>
+                    <span>@chapter</span>
+                </p>
+
+                <p>
+                    <span>Verse:</span>
+                    <span>@verse</span>
+                </p>
+
+                <p>
+                    <span>Note:</span>
+                    <span>@note</span>
+                </p>
+
+                <input type="hidden" name="scriptureid" value="@scriptureId" />
+                <p><input type="submit" name="buttonDelete" value="Delete Scripture" /></p>
+            </fieldset>
+        </div>
+    </form>
+
+</body>
+</html>

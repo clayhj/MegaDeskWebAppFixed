@@ -1,10 +1,19 @@
-﻿@{ 
+﻿@{
 
 
-    var db = Database.OpenConnectionString("Data Source=|DataDirectory|\\MegaDeskQuotes.sdf", "System.Data.SqlServerCe.4.0"); ;
+    var db = Database.OpenConnectionString("Data Source=|DataDirectory|\\MegaDeskQuotes.sdf", "System.Data.SqlServerCe.4.0");
     var selectCommand = "SELECT * FROM Quotes";
 
-    var selectedData = db.Query(selectCommand);
+    var searchCustomer = "";
+
+
+    if (!Request.QueryString["searchCustomer"].IsEmpty())
+    {
+        selectCommand = "Select * FROM Quotes Where CustomerName LIKE @0";
+        searchCustomer = "%" + Request["searchCustomer"] + "%";
+    }
+
+    var selectedData = db.Query(selectCommand, searchCustomer);
     var grid = new WebGrid(source: selectedData, defaultSort: "QuoteDate", rowsPerPage: 5);
 
 
@@ -20,7 +29,19 @@
     <title>MegaDesk</title>
 </head>
 <body>
-    <h1>View Quotes</h1>
+    <h1>Quotes</h1>
+
+    <form method="get">
+
+        <div>
+            <label for="searchCustomer">Search Customer:</label>
+            <input type="text" name="searchCustomer" value="@Request.QueryString["searchCustomer"]" />
+            <input type="Submit" value="Search Customer" /><br />
+            (Leave blank to list all Quotes)<br />
+        </div>
+
+
+    </form>
 
     <div class="grid">
         @grid.GetHtml(
@@ -28,14 +49,16 @@
     headerStyle: "head",
     alternatingRowStyle: "alt",
     columns: grid.Columns(
+        grid.Column(format: @<a href="~/EditQuote?id=@item.Id">Edit</a>),
         grid.Column("CustomerName", header: "Customer Name"),
         grid.Column("QuoteDate", header: "Quote Date"),
-        grid.Column("Width"),
-        grid.Column("Depth"),
-        grid.Column("Material"),
-        grid.Column("Drawers"),
-        grid.Column("RushOrder", header: "Rush Order"),
-        grid.Column("Total")
+        grid.Column("Width", canSort: false),
+        grid.Column("Depth", canSort: false),
+        grid.Column("Material", canSort: false),
+        grid.Column("Drawers", canSort: false),
+        grid.Column("RushOrder", header: "Rush Order", canSort: false),
+        grid.Column("Total", canSort: false),
+        grid.Column(format: @<a href="~/DeleteQuote?id=@item.Id">Delete</a>)
     )
 )
     </div>

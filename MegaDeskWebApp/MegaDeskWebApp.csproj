@@ -91,9 +91,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AddQuote.cshtml" />
+    <Content Include="EditQuote.cshtml" />
+    <Content Include="DeleteQuote.cshtml" />
     <None Include="packages.config" />
     <Content Include="ViewQuotes.cshtml" />
-    <Content Include="SearchQuotes.cshtml" />
     <Content Include="Success.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -106,6 +107,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Desk.cs" />
+    <Compile Include="DeskQuote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

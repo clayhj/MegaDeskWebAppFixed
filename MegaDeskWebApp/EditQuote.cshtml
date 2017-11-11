@@ -1,0 +1,205 @@
+﻿@{
+
+    var customer = "";
+    int width = 0;
+    int depth = 0;
+    var material = "";
+    int drawers = 0;
+    int rush = 0;
+    var quoteId = "";
+    var rush3Check = "";
+    var rush5Check = "";
+    var rush7Check = "";
+    var rush14Check = "";
+    var laminateCheck = "";
+    var oakCheck = "";
+    var rosewoodCheck = "";
+    var veneerCheck = "";
+    var pineCheck = "";
+    int totalPrice = 0;
+
+
+
+    if (!IsPost)
+    {
+        if (!Request.QueryString["Id"].IsEmpty() && Request.QueryString["Id"].IsInt())
+        {
+            quoteId = Request.QueryString["Id"];
+            var db = Database.OpenConnectionString("Data Source=|DataDirectory|\\MegaDeskQuotes.sdf", "System.Data.SqlServerCe.4.0");
+            var dbCommand = "SELECT * FROM Quotes WHERE Id = @0";
+            var row = db.QuerySingle(dbCommand, quoteId);
+            if (row != null)
+            {
+                customer = row.CustomerName;
+                width = row.Width;
+                depth = row.Depth;
+                material = row.Material;
+                drawers = row.Drawers;
+                rush = row.RushOrder;
+
+                switch (rush)
+                {
+                    case 3:
+                        rush3Check = "checked";
+                        break;
+                    case 5:
+                        rush5Check = "checked";
+                        break;
+                    case 7:
+                        rush7Check = "checked";
+                        break;
+                    case 14:
+                        rush14Check = "checked";
+                        break;
+                }
+                switch (material)
+                {
+                    case "Laminate":
+                        laminateCheck = "selected";
+                        break;
+                    case "Oak":
+                        oakCheck = "selected";
+                        break;
+                    case "Rosewood":
+                        rosewoodCheck = "selected";
+                        break;
+                    case "Veneer":
+                        veneerCheck = "selected";
+                        break;
+                    case "Pine":
+                        pineCheck = "selected";
+                        break;
+                }
+            }
+            else
+            {
+                Validation.AddFormError("No Quote was found for that ID.");
+            }
+        }
+        else
+        {
+            Validation.AddFormError("No Quote was selected.");
+        }
+    }
+
+    if (IsPost)
+    {
+        Validation.RequireField("customer", "You must enter a customer name");
+        Validation.RequireField("width", "You must enter the width");
+        Validation.RequireField("depth", "You must enter the depth");
+        Validation.RequireField("material", "You must select a material");
+        Validation.RequireField("drawers", "You must enter number of drawers");
+        Validation.RequireField("rush", "A note is required");
+        Validation.RequireField("quoteId", "No Quote ID was submitted!");
+
+        customer = Request.Form["customer"];
+        width = Request.Form["width"].AsInt();
+        depth = Request.Form["depth"].AsInt();
+        material = Request.Form["material"];
+        drawers = Request.Form["drawers"].AsInt();
+        rush = Request.Form["rush"].AsInt();
+        quoteId = Request.Form["quoteId"];
+
+
+        if (Validation.IsValid())
+        {
+            var db = Database.OpenConnectionString("Data Source=|DataDirectory|\\MegaDeskQuotes.sdf", "System.Data.SqlServerCe.4.0");
+            var updateCommand = "UPDATE Quotes SET CustomerName=@0, Width=@1, Depth=@2, Material=@3, Drawers=@4, RushOrder=@5, Total=@6 WHERE Id=@7";
+
+            Desk desk = new Desk();
+
+            desk.Width = width;
+            desk.Depth = depth;
+            desk.DeskMaterial = material;
+            desk.Drawers = drawers;
+            DeskQuote deskQuote = new DeskQuote(desk);
+            deskQuote.RushOrder = rush;
+            deskQuote.QuotePrice = deskQuote.GetQuote();
+
+            totalPrice = deskQuote.QuotePrice;
+
+
+
+
+            db.Execute(updateCommand, customer, width, depth, material, drawers, rush, totalPrice, quoteId);
+            Response.Redirect("~/ViewQuotes");
+        }
+    }
+
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>MegaDesk</title>
+</head>
+<body>
+    <h1>Edit Quote</h1>
+    @Html.ValidationSummary()
+    <form method="post">
+        <fieldset>
+            <legend>Quote Information</legend>
+
+            <p>
+                <label for="customer">Customer:</label>
+                <input type="text" name="customer" value="@customer" />
+            </p>
+
+            <p>
+                <label for="width">Width:</label>
+                <input type="number" min="24" max="96" name="width" value="@width" />
+            </p>
+
+            <p>
+                <label for="depth">Depth:</label>
+                <input type="number" min="12" max="48" name="depth" value="@depth" />
+            </p>
+
+            <p>
+                <label for="material">Material:</label>
+                <select type="text" name="material">
+                    <option value="Laminate" @laminateCheck>Laminate</option>
+                    <option value="Oak" @oakCheck>Oak</option>
+                    <option value="Rosewood"@rosewoodCheck>Rosewood</option>
+                    <option value="Veneer"@veneerCheck>Veneer</option>
+                    <option value="Pine"@pineCheck>Pine</option>
+                </select>
+                @Html.ValidationMessage("material")
+            </p>
+
+            <p>
+                <label for="drawers">Drawers:</label>
+                <input type="number" min="0" max="7" name="drawers" value="@drawers" />
+            </p>
+
+            <p>
+                <label for="rush">Rush Order:</label>
+            </p>
+            <div>
+                <input type="radio" id="rush3"
+                       name="rush" value="3" @rush3Check>
+                <label for="rush3">3 Days</label>
+
+                <input type="radio" id="rush5"
+                       name="rush" value="5" @rush5Check>
+                <label for="rush5">5 Days</label>
+
+                <input type="radio" id="rush7"
+                       name="rush" value="7" @rush7Check>
+                <label for="rush7">7 Days</label>
+
+                <input type="radio" id="rush14"
+                       name="rush" value="14" @rush14Check>
+                <label for="rush14">14 Days</label>
+            </div>
+
+            <input type="hidden" name="quoteid" value="@quoteId" />
+
+            <p><input type="submit" name="buttonSubmit" value="Submit Changes" /></p>
+        </fieldset>
+    </form>
+    <p><a href="~/ViewQuotes">Return to View Quotes</a></p>
+</body>
+</html>
