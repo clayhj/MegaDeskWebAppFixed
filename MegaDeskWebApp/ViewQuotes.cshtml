@@ -9,7 +9,7 @@
 
     if (!Request.QueryString["searchCustomer"].IsEmpty())
     {
-        selectCommand = "Select * FROM Quotes Where CustomerName LIKE @0";
+        selectCommand = "SELECT * FROM Quotes WHERE CustomerName LIKE @0";
         searchCustomer = "%" + Request["searchCustomer"] + "%";
     }
 
