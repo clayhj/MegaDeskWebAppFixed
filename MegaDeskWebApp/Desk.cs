@@ -24,4 +24,8 @@ using System.Threading.Tasks;
 
         public int Drawers { get; set; }
 
+        public int RushOrder { get; set; }
+
+        public decimal Total { get; set; }
+
     }

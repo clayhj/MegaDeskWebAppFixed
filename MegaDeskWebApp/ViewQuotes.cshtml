@@ -7,7 +7,6 @@
 
     var searchCustomer = "";
 
-
     if (!Request.QueryString["searchCustomer"].IsEmpty())
     {
         selectCommand = "Select * FROM Quotes Where CustomerName LIKE @0";
@@ -16,11 +15,6 @@
 
     var selectedData = db.Query(selectCommand, searchCustomer);
     var grid = new WebGrid(source: selectedData, defaultSort: "QuoteDate", rowsPerPage: 5);
-
-
-
-
-
 }
 
     <h2>Quotes</h2>
@@ -33,9 +27,7 @@
             <input type="Submit" value="Search Customer" /><br />
             (Leave blank to list all Quotes)<br />
         </div>
-
-
-    </form>
+ </form>
 
     <div class="grid">
         @grid.GetHtml(
