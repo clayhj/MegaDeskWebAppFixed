@@ -5,7 +5,6 @@
 
     Validation.RequireField("width", "You must enter a width!");
     Validation.RequireField("depth", "You must enter a depth!");
-    Validation.RequireField("material", "You must enter a surface material!");
     Validation.RequireField("rush", "You must enter the number of rush order days!");
     Validation.RequireField("drawers", "You must enter a number of drawers!");
     Validation.RequireField("customer", "You must enter a customer name!");
@@ -69,14 +68,13 @@
 
             <p>
                 <label for="material">Material:</label>
-                <select type="text" name="material" value = "@Request.Form["material"]">
+                <select type="text" name="material">
                     <option value="Laminate">Laminate</option>
                     <option value="Oak">Oak</option>
                     <option value="Rosewood">Rosewood</option>
                     <option value="Veneer">Veneer</option>
                     <option value="Pine">Pine</option>
                 </select>
-                @Html.ValidationMessage("material")
             </p>
 
             <p>
